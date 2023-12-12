@@ -1,0 +1,25 @@
+{
+  "name": "demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "ts": "rimraf src/api && java -cp lib/swagger-codegen-cli.jar;lib/ts-axios-swagger-gen-1.0.0.jar io.swagger.codegen.v3.cli.SwaggerCodegen generate -i http://localhost:8082/v3/api-docs -l typescript-axios-simple -o src/api",
+    "swagger-codegen-cli": "java -jar lib/swagger-codegen-cli.jar"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "qs": "^6.11.2",
+    "vue": "^3.3.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vue-tsc": "^1.8.22"
+  }
+}

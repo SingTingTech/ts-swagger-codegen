@@ -1,0 +1,53 @@
+/* tslint:disable */
+/* eslint-disable */
+
+import fetch from '../utils/fetch';
+import {AxiosRequestConfig} from 'axios';
+
+// Some imports not used depending on template conditions
+// @ts-ignore
+{{#imports}}
+import { {{import}} } from '{{apiRelativeToRoot}}{{tsModelPackage}}';
+{{/imports}}
+
+{{#operations}}
+export class {{classname}} {
+    {{#operation}}
+    {{#contents}}
+        /**
+         * {{&notes}}
+         {{#summary}}
+         * @summary {{&summary}}
+         {{/summary}}
+         {{#parameters}}
+         * @param {{braces "left"}}{{{dataType}}}{{braces "right"}} {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
+         {{/parameters}}
+         * @param {*} [config] Override http request option.
+         */
+        public static {{nickname}}({{#parameters}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/parameters}}config?: AxiosRequestConfig) {
+            return fetch({
+              ...config,
+              url: `{{{path}}}`,
+              method: '{{httpMethod}}',
+        {{#hasQueryParams}}
+              params:{
+        {{#queryParams}}
+            {{#isPrimitiveType}}
+                {{paramName}},
+            {{/isPrimitiveType}}
+            {{^isPrimitiveType}}
+                ...{{paramName}}
+            {{/isPrimitiveType}}
+        {{/queryParams}}
+              },
+        {{/hasQueryParams}}
+        {{#bodyParam}}
+              data: {{paramName}},
+        {{/bodyParam}}
+            })
+        }
+    {{/contents}}
+    {{/operation}}
+};
+
+{{/operations}}
